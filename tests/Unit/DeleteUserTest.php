@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Http\Controllers\User\RegistrationController;
+use App\Http\Requests\User\RegisterPostRequest;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -22,17 +24,14 @@ class DeleteUserTest extends TestCase
         if (!is_null($user)) {
             $user->delete();
         }
+
         $registerResponse = $this->post('api/user/register', $userJson);
         $registerResponse->assertOk();
-        $token = $registerResponse->json('token');
+        $token = $registerResponse->decodeResponseJson()['data']['token'];
 
-        var_dump(
-            'token' . $token
-        );
-
-        $deleteUserHeader = ['Authorization' => 'Bearer ' . $token];
         $deleteUserBody = ['email' => 'test_gmail@gmail.com'];
-        $deleteUserResponse = $this->post('api/user/delete', $deleteUserBody, $deleteUserHeader);
+        $deleteUserResponse = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->post('/api/user/delete', $deleteUserBody);
 
         $deleteUserResponse->assertOk();
     }

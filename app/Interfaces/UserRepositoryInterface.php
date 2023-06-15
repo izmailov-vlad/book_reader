@@ -16,5 +16,5 @@ interface UserRepositoryInterface
 
     public function isUserSelectedWishes(): bool;
 
-    public function editUser($data, array $photo) : User;
+    public function editUser($data) : User;
 }

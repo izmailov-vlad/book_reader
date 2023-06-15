@@ -95,18 +95,37 @@ class BookRepository implements BookRepositoryInterface
         $wishes = Auth::user()->wishes()->get();
         $categories = [];
         foreach ($wishes as $wish) {
-            $categories[] = Category::where('id', '=', $wish->id)->get();
+            $categories[] = Category::where('id', '=', $wish->category_id)->get();
         }
         $categoriesQuery = '';
         for ($i = 0; $i < count($categories); $i++) {
             $categoriesQuery .= $categories[$i]->value('name') . ', ';
         }
 
-        if (str_ends_with($categoriesQuery, "+")) {
+        if (str_ends_with($categoriesQuery, ",")) {
             $categoriesQuery = substr($categoriesQuery, 0, -1);
         }
 
         return $this->googleBooksApi->getBookByQuery("Книги жанра $categoriesQuery&orderBy=newest", 0, 10);
+    }
+
+    public function getPopularBooksByUserWishes(): array
+    {
+        $wishes = Auth::user()->wishes()->get();
+        $categories = [];
+        foreach ($wishes as $wish) {
+            $categories[] = Category::where('id', '=', $wish->category_id)->get();
+        }
+        $categoriesQuery = '';
+        for ($i = 0; $i < count($categories); $i++) {
+            $categoriesQuery .= $categories[$i]->value('name') . ', ';
+        }
+
+        if (str_ends_with($categoriesQuery, ",")) {
+            $categoriesQuery = substr($categoriesQuery, 0, -1);
+        }
+
+        return $this->googleBooksApi->getBookByQuery("Книги жанра $categoriesQuery&orderBy=relevance", 0, 10);
     }
 
     public function changeBookFavorite(string $bookId): bool

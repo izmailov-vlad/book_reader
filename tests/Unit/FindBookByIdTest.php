@@ -31,7 +31,7 @@ class FindBookByIdTest extends TestCase
         ],
         );
         $loginResponse->assertOk();
-        $token = $loginResponse->json('token');
+        $token = $loginResponse->decodeResponseJson()['data']['token'];;
         $bookHeader = ['Authorization' => 'Bearer ' . $token];
 
         $bookResponse = $this->get('api/book/book-by-id?book_id=u5a8DwAAQBAJ', $bookHeader);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Book\BooksPopularController;
 use App\Http\Controllers\ChatGPT\ApiController;
 use App\Http\Controllers\Book\BookByIdController;
 use App\Http\Controllers\Book\BookByQueryController;
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/update-photo', UpdatePhotoController::class);
     Route::post('/user/edit', UserEditController::class);
     Route::get('/book/new-books', BooksNewPublishedController::class);
+    Route::get('/book/popular-books', BooksPopularController::class);
     Route::post('/book/change-favorite', [BookFavoriteController::class, 'changeFavorite']);
     Route::get('/user/favorite', [BookFavoriteController::class, 'userFavorite']);
     Route::get('/user/get-curr-user', GetCurrentUserAuthController::class);

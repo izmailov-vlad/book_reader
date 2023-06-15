@@ -32,8 +32,9 @@ class LogoutTest extends TestCase
         ],
         );
         $loginResponse->assertOk();
-        $data = $loginResponse->json('token');
-        $logoutHeader = ['Authorization' => 'Bearer ' . $data];
+        $data = $loginResponse->decodeResponseJson()['data']['token'];
+
+        $logoutHeader = ['Authorization' => 'Bearer ' . $data, 'Accept=application/json'];
         $logoutResponse = $this->post('api/user/logout', [], $logoutHeader);
 
         $logoutResponse->assertOk();

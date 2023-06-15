@@ -4,12 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Requests\User\DeleteUserRequest;
 use Illuminate\Http\JsonResponse;
+use Request;
 
 class DeleteUserController extends BaseController
 {
-    public function __invoke(DeleteUserRequest $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        $request->validated();
         $deleteResult = $this->repository->delete();
         return response()->json(['success' => $deleteResult]);
     }

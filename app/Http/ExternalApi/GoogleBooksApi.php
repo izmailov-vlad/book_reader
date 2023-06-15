@@ -25,13 +25,26 @@ class GoogleBooksApi
     /**
      * @throws GuzzleException
      */
-    public function getBookByQuery(string $query, int $startIndex, $maxResult): mixed
+    public function getBookByQuery(string $query, int $startIndex, int $maxResult): mixed
     {
         $response = $this->httpClient->request(
             'GET',
             GoogleBooksApiPath::$volumes
             . '?q=' . $query
             . '&maxResults=' . $maxResult
+            . '&startIndex=' . $startIndex
+            . $this->apiKey
+        );
+        return json_decode($response->getBody(), true);
+    }
+
+    public function getBookByVolumes(string $volume, int $startIndex, int $maxResult)
+    {
+        $response = $this->httpClient->request(
+            'GET',
+            GoogleBooksApiPath::$volumes
+            . $volume
+            . '?maxResults=' . $maxResult
             . '&startIndex=' . $startIndex
             . $this->apiKey
         );

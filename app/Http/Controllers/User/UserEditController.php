@@ -15,7 +15,7 @@ class UserEditController extends BaseController
     public function __invoke(UserEditRequest $request)
     {
         $data = $request->validated();
-        $user = $this->repository->editUser($data, $request->file('photo'));
+        $user = $this->repository->editUser($data);
         return response()->json($user);
     }
 }

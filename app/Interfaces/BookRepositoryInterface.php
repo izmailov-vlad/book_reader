@@ -19,6 +19,8 @@ interface BookRepositoryInterface
 
     public function getNewPublishedBooksByUserWishes(): array;
 
+    public function getPopularBooksByUserWishes(): array;
+
     public function changeBookFavorite(string $bookId): bool;
 
     public function addComment($data, string $bookId): bool;

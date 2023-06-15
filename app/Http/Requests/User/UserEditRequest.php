@@ -15,9 +15,7 @@ class UserEditRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'surname' => 'nullable|string',
             'email' => 'nullable|string',
-            'photo' => 'nullable|string',
         ];
     }
 }

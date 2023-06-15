@@ -19,7 +19,7 @@ class LoginController extends BaseController
             return new LoginResource(User::find($user->id));
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
-            return response()->json(['error'=>$exception->getMessage()]);
+            abort(404, message: 'NotFound');
         }
     }
 }

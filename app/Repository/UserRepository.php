@@ -66,19 +66,13 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function editUser($data, array $photo): User
+    public function editUser($data): User
     {
         $user = Auth::user();
-        $userPhoto = null;
-        if ($photo != null) {
-            $userPhoto = $photo;
-            $filename = time() . '.' . $photo;
-            Image::make($userPhoto)->fit(300, 300)->save(public_path('avatars/' . $filename));
-        }
+
         $user->update([
             'name' => $data['name'],
             'email' => $data['email'],
-            'photo' => $userPhoto,
         ]);
         $user->save();
         return $user;
